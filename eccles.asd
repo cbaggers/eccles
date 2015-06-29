@@ -1,11 +1,15 @@
 ;;;; eccles.asd
 
 (asdf:defsystem #:eccles
-  :description "Describe eccles here"
-  :author "Your Name <your.name@example.com>"
-  :license "Specify license here"
+  :description "CLOSy traditional game object"
+  :author "Chris Bagley <techsnuffle@gmail.com>"
+  :license "GPLv3"
   :serial t
   :depends-on (#:cepl #:defclass-triv)
   :components ((:file "package")
                (:file "base")
-               (:file "object")))
+               (:file "mesh")
+               (:file "material")
+               (:file "object")
+               (:file "camera")
+               (:file "init")))

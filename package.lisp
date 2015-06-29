@@ -1,4 +1,5 @@
 ;;;; package.lisp
 
 (defpackage #:eccles
-  (:use #:cl #:cepl))
+  (:use #:cl #:cepl)
+  (:shadow :camera :make-camera))
