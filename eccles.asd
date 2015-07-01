@@ -11,6 +11,7 @@
                (:file "mesh")
                (:file "material")
                (:file "object")
+               (:file "primitives")
                (:file "camera")
                (:file "render")
                (:file "init")))

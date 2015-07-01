@@ -15,10 +15,28 @@
                                                  :height size
                                                  :depth size))))
 
+(defun make-box-mesh (&optional (dimensions (v! 1 1 1)))
+  (%prim-data-to-pnt-mesh (primitives:box-data :width (v:x dimensions)
+                                               :height (v:y dimensions)
+                                               :depth (v:z dimensions))))
+
 
 (defun make-sphere-mesh (&optional (radius 1))
   (let ((size (coerce size 'single-float)))
     (%prim-data-to-pnt-mesh (primitives:sphere-data :radius radius))))
+
+
+(defun make-cone-mesh (&optional (segments 10) (height 1) (radius 0.5))
+  (let ((height (coerce height 'single-float))
+        (radius (coerce radius 'single-float)))
+    (%prim-data-to-pnt-mesh (primitives:cone-data
+                             :segments segments :height height :radius radius))))
+
+(defun make-cylinder-mesh (&optional (segments 10) (height 1) (radius 0.5))
+  (let ((height (coerce height 'single-float))
+        (radius (coerce radius 'single-float)))
+    (%prim-data-to-pnt-mesh (primitives:cylinder-data
+                             :segments segments :height height :radius radius))))
 
 ;;-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 

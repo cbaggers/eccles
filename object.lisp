@@ -11,18 +11,6 @@
                      (m4:m* (world->clip camera)
                             (node-transform node)))))
 
-(defclass+ cube (object))
-
-(defun make-cube (&optional (size 1) texture)
-  (make-instance 'cube :mesh (make-cube-mesh size)
-                 :material (make-instance '1-tex-pnt :tex texture)))
-
-(defclass+ sphere (object))
-
-(defun make-sphere (&optional (size 1) texture)
-  (make-instance 'sphere :mesh (make-sphere-mesh size)
-                 :material (make-instance '1-tex-pnt :tex texture)))
-
 
 (defmethod pos ((object object))
   (with-slots (node) object
