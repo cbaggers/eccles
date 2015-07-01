@@ -16,6 +16,9 @@
               :reader frame-size)
   (world-up :initform (v! 0.0 1.0 0.0)))
 
+(defmethod initialize-instance :after ((cam camera) &key)
+  (update-cam->clip cam))
+
 (defmethod update-cam->clip ((camera camera))
   ;; perspective
   (let* ((aspect-ratio (/ (first (frame-size camera))
@@ -62,14 +65,15 @@
 (defmethod look-at (camera point-vec3)
   (with-slots (node) camera
     (setf (pqn-quat node)
-          (q:make-quat-from-vectors (pqn-pos node) point-vec3))))
+          (q:make-quat-from-look-at (pqn-pos node) point-vec3))))
 
 (defmethod world->cam ((camera camera))
   (with-slots (node) camera
-    (q:to-matrix4 (q:inverse (pqn-quat node)))))
+    (m4:m* (m4:translation (pqn-pos node))
+           (q:to-matrix4 (q:inverse (pqn-quat node))))))
 
 (defmethod world->clip (camera)
   (m4:m* (cam->clip camera)
-         (world->clip camera)))
+         (world->cam camera)))
 
 ;;;--------------------------------------------------------------

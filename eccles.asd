@@ -5,11 +5,12 @@
   :author "Chris Bagley <techsnuffle@gmail.com>"
   :license "GPLv3"
   :serial t
-  :depends-on (#:cepl #:defclass-triv)
+  :depends-on (#:cepl-default #:defclass-triv)
   :components ((:file "package")
                (:file "base")
                (:file "mesh")
                (:file "material")
                (:file "object")
                (:file "camera")
+               (:file "render")
                (:file "init")))

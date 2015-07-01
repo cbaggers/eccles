@@ -1,22 +1,30 @@
 (in-package :eccles)
 
-(defclass+ material ()
-  pipeline)
+;;--------------------------------------------------------------
 
-(defgeneric render-material (camera material vbuffer transform))
+(defun load-texture (path)
+  (devil-helper:load-image-to-texture path))
 
 ;;--------------------------------------------------------------
+
+(defclass+ material ()
+  (pipeline :initform (error ":pipeline is mandatory when creating a material")))
 
 (defclass+ pnt-material (material))
 
 (defclass+ 1-tex-material (material)
   tex)
 
-(defclass+ 1-tex-pnt (pnt-material 1-tex-material))
+(defmethod texture ((mat 1-tex-material))
+  (slot-value mat 'tex))
 
-(defmethod render-material ((camera camera) (material 1-tex-pnt)
-                            (vstream cgl::vertex-stream) transform)
-  (map-g (pipeline material) vstream :tex (tex material)))
+(defmethod (setf texture) (value (mat 1-tex-material))
+  (setf (slot-value mat 'tex) value))
+
+;;--------------------------------------------------------------
+
+(defclass+ 1-tex-pnt (pnt-material 1-tex-material)
+  (pipeline :initform #'1-tex-pipeline))
 
 ;;    -    -    -    -    -    -    -    -    -    -    -    -
 
@@ -27,6 +35,6 @@
 (defun-g 1-tex-frag ((tc :vec2) &uniform (tex :sampler-2d))
   (texture tex tc))
 
-(defpipeline 1-tex-pipeline () (g-> #'simple-pnt-vert #'1-tex-frag))
+(cepl:defpipeline 1-tex-pipeline () (g-> #'simple-pnt-vert #'1-tex-frag))
 
 ;;--------------------------------------------------------------
